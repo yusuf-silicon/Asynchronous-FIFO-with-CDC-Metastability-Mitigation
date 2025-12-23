@@ -9,11 +9,10 @@ build/
 *.xml
 *.xpr
 *.xpr.lock
-.Xil/
+*.Xil/
 *.cache/
 *.ip_user_files/
 *.sim/
-
 
 # Files to include later on
 scripts/
