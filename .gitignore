@@ -1,0 +1,34 @@
+# =========================
+# Global generated folders
+# =========================
+build/
+results/
+temp/
+
+# =========================
+# Simulation safety net
+# (sim/ itself is tracked)
+# =========================
+sim/work/
+sim/transcript
+sim/vsim.wlf
+
+# =========================
+# Synthesis working area
+# =========================
+syn/build/
+
+# =========================
+# Synthesis raw / noisy outputs
+# (curated reports can be added explicitly)
+# =========================
+syn/results/*.log
+syn/results/*.jou
+syn/results/*.wdb
+syn/results/*.pb
+syn/results/*.xml
+
+# =========================
+# Personal notes
+# =========================
+docs/EnhancementGuide.txt
