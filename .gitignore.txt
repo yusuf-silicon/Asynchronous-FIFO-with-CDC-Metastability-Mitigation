@@ -22,6 +22,7 @@ docs/EnhancementGuide.txt
 
 # Files To be kept ignored
 results/
+results/work/
 temp/
 
  
