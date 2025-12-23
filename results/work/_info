@@ -1,0 +1,125 @@
+m255
+K4
+z2
+!s11f vlog 2020.1 2020.02, Feb 28 2020
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/Yusuf/Documents/Production/VLSI
+vbinaryToGray
+Z0 !s110 1755070864
+!i10b 1
+!s100 =h]MzL0QfLKfE];V_JfRD1
+Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
+IFN`2f]MHLhC1N[9BnGXWd0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 dC:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO
+w1754702660
+8./src/binary_to_gray.v
+F./src/binary_to_gray.v
+!i122 68
+L0 1 10
+Z4 OV;L;2020.1;71
+r1
+!s85 0
+31
+Z5 !s108 1755070864.000000
+!s107 ./src/binary_to_gray.v|
+!s90 -reportprogress|300|./src/binary_to_gray.v|
+!i113 1
+Z6 tCvgOpt 0
+nbinary@to@gray
+vFIFO
+R0
+!i10b 1
+!s100 @heI]@foZAKjcSz6`jfU31
+R1
+Iifl<oNS7g^7`SPjn?3cEz2
+R2
+R3
+w1755048921
+8./src/main.v
+F./src/main.v
+!i122 67
+L0 1 124
+R4
+r1
+!s85 0
+31
+R5
+!s107 ./src/main.v|
+!s90 -reportprogress|300|./src/main.v|
+!i113 1
+R6
+n@f@i@f@o
+vgrayToBinary
+R0
+!i10b 1
+!s100 0zCDd]o[mn;zFe_^XXSUc1
+R1
+IE[noQFCkMzi56aD5_T6CS1
+R2
+R3
+w1754702681
+8./src/gray_to_binary.v
+F./src/gray_to_binary.v
+!i122 69
+L0 1 20
+R4
+r1
+!s85 0
+31
+R5
+!s107 ./src/gray_to_binary.v|
+!s90 -reportprogress|300|./src/gray_to_binary.v|
+!i113 1
+R6
+ngray@to@binary
+vsync
+R0
+!i10b 1
+!s100 iHl83<cBKGZT_eO4bdSn12
+R1
+Id^hhhnceoNDfaB@P0KH7e2
+R2
+R3
+w1754703092
+8./src/synchronizer.v
+F./src/synchronizer.v
+!i122 70
+L0 1 25
+R4
+r1
+!s85 0
+31
+R5
+!s107 ./src/synchronizer.v|
+!s90 -reportprogress|300|./src/synchronizer.v|
+!i113 1
+R6
+vtb_FIFO
+R0
+!i10b 1
+!s100 [LX8kRSe7YLaCD6Y?k@c<2
+R1
+IXkkYSUQ2[Ro9Hl`oH@BTT3
+R2
+R3
+w1755063414
+8./tb/tb_main.v
+F./tb/tb_main.v
+!i122 71
+L0 3 284
+R4
+r1
+!s85 0
+31
+R5
+!s107 ./tb/tb_main.v|
+!s90 -reportprogress|300|./tb/tb_main.v|
+!i113 1
+R6
+ntb_@f@i@f@o

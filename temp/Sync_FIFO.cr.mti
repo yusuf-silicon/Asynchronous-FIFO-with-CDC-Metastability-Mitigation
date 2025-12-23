@@ -1,0 +1,36 @@
+{C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/gray_to_binary.v} {1 {vlog -work work -stats=none {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/gray_to_binary.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module grayToBinary
+
+Top level modules:
+	grayToBinary
+
+} {} {}} {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/binary_to_gray.v} {1 {vlog -work work -stats=none {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/binary_to_gray.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module binaryToGray
+
+Top level modules:
+	binaryToGray
+
+} {} {}} {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/main.v} {1 {vlog -work work -stats=none {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/main.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module FIFO
+
+Top level modules:
+	FIFO
+
+} {} {}} {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/tb_main.v} {1 {vlog -work work -stats=none {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/tb_main.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module tb_FIFO
+
+Top level modules:
+	tb_FIFO
+
+} {} {}} {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/synchronizer.v} {1 {vlog -work work -stats=none {C:/Users/Yusuf/Documents/Production/VLSI/Projects/Sync FIFO/synchronizer.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module sync
+
+Top level modules:
+	sync
+
+} {} {}}
