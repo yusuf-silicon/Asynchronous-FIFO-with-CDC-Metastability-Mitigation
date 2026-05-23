@@ -1,0 +1,13 @@
+!write_if
+reset rst 
+ClkWrite write_clk
+ControlIn wr_en 
+DataIn data_in 
+HaltInput full 
+
+!read_if
+ClkRead read_clk
+ControlOut rd_en
+ReadValid rd_valid
+DataOut data_out 
+HaltOutput empty

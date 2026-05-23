@@ -1,0 +1,118 @@
+
+Easier UVM Code Generator version 2016-04-18-EP (Send feedback to info@doulos.com)
+
+Parsing cmdline ...
+
+num args is 2
+Code generation will continue if critical warnings are issued
+pnum_c: 0
+Searching for regmodel flag
+Searching for prefix
+Searching for common template
+Searching for Syosil scoreboard path
+Searching for templates
+T_List:  write_agent.tpl
+List: write_agent.tpl
+T_List:  write_agent.tpl read_agent.tpl
+List: write_agent.tpl
+List: read_agent.tpl
+Parsing common : common.tpl ...
+
+dut_top: FIFO
+top_default_seq_count = 900
+top_env_inc_inside_class = top_env_inc_inside_class.sv inline
+top_env_prepend_to_build_phase = top_env_build_phase_inc.sv inline
+top_env_append_to_connect_phase = top_env_connect_phase_inc.sv inline
+prefix for top-level names: top
+$regmodel = 0
+
+Parsing Templates ...
+
+Reading[1]: write_agent.tpl
+agent_name: agent_name = write
+trans_item= write_trans
+trans_var: rand logic [7:0] data 	;
+trans_var: logic wr_en 		;
+if_port = logic rst				;
+if_port = logic write_clk		;
+if_port = logic wr_en			;
+if_port = logic [7:0] data_in	;
+if_port = logic full			;
+env_clock_list: write write_clk
+clist[0]: write
+clist[1]: write_clk
+driver_inc = write_driver_inc.sv inline
+clist[0]: write
+clist[1]: write_clk
+monitor_inc = write_monitor_inc.sv inline
+clist[0]: write
+clist[1]: write_clk
+dir: generated_tb/tb/write
+Writing code to files
+AGENT-ITEM: write_trans
+var_decl=rand logic [7:0] data 	;
+stripped_decl=rand logic    data 	;
+VARIABLE type = logic, var = data
+var_decl=logic wr_en 		;
+stripped_decl=logic wr_en 		;
+VARIABLE type = logic, var = wr_en
+Reading[2]: read_agent.tpl
+agent_name: agent_name = read
+clist[0]: write
+clist[1]: write_clk
+trans_item= read_trans
+clist[0]: write
+clist[1]: write_clk
+trans_var: logic rd_en		;
+clist[0]: write
+clist[1]: write_clk
+trans_var: logic [7:0] data		;
+clist[0]: write
+clist[1]: write_clk
+if_port = logic read_clk		;
+clist[0]: write
+clist[1]: write_clk
+if_port = logic rd_en			;
+clist[0]: write
+clist[1]: write_clk
+if_port = logic rd_valid		;
+clist[0]: write
+clist[1]: write_clk
+if_port = logic [7:0] data_out	;
+clist[0]: write
+clist[1]: write_clk
+if_port = logic empty			;
+clist[0]: write
+clist[1]: write_clk
+env_clock_list: write write_clk read read_clk
+clist[0]: write
+clist[1]: write_clk
+clist[2]: read
+clist[3]: read_clk
+driver_inc = read_driver_inc.sv inline
+clist[0]: write
+clist[1]: write_clk
+clist[2]: read
+clist[3]: read_clk
+monitor_inc = read_monitor_inc.sv inline
+clist[0]: write
+clist[1]: write_clk
+clist[2]: read
+clist[3]: read_clk
+dir: generated_tb/tb/read
+Writing code to files
+AGENT-ITEM: read_trans
+var_decl=logic rd_en		;
+stripped_decl=logic rd_en		;
+VARIABLE type = logic, var = rd_en
+var_decl=logic [7:0] data		;
+stripped_decl=logic    data		;
+VARIABLE type = logic, var = data
+top env agents = write read
+Generating testbench in generated_tb/tb
+Writing ports for interface write_if_0
+Writing ports for interface read_if_0
+Generating simulator scripts in generated_tb/sim
+env_list=, agent_list=write read,
+env_list=, agent_list=write read,
+Code Generation complete

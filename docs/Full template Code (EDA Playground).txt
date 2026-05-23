@@ -1,0 +1,301 @@
+-------------------------------------------------------------------------
+common.tpl
+-------------------------------------------------------------------------
+dut_top = FIFO
+
+top_default_seq_count = 900
+
+top_env_inc_inside_class = top_env_inc_inside_class.sv inline
+top_env_prepend_to_build_phase  = top_env_build_phase_inc.sv inline
+top_env_append_to_connect_phase  = top_env_connect_phase_inc.sv inline
+
+-------------------------------------------------------------------------
+pinlist.txt
+-------------------------------------------------------------------------
+!write_if
+reset rst 
+ClkWrite write_clk
+ControlIn wr_en 
+DataIn data_in 
+HaltInput full 
+
+!read_if
+ClkRead read_clk
+ControlOut rd_en
+ReadValid rd_valid
+DataOut data_out 
+HaltOutput empty
+
+-------------------------------------------------------------------------
+write_agent.tpl
+-------------------------------------------------------------------------
+agent_name = write
+
+trans_item = write_trans
+
+trans_var = rand logic [7:0] data 	;
+trans_var = 	 logic wr_en 		;
+
+if_port = logic rst				;
+if_port = logic write_clk		;
+if_port = logic wr_en			;
+if_port = logic [7:0] data_in	;
+if_port = logic full			;
+
+if_clock = write_clk
+
+
+driver_inc = write_driver_inc.sv inline
+monitor_inc = write_monitor_inc.sv inline
+
+-------------------------------------------------------------------------
+read_agent.tpl
+-------------------------------------------------------------------------
+agent_name = read
+
+trans_item = read_trans
+
+trans_var = logic rd_en		;
+trans_var = logic [7:0] data		;
+
+if_port = logic read_clk		;
+if_port = logic rd_en			;
+if_port = logic rd_valid		;
+if_port = logic [7:0] data_out	;
+if_port = logic empty			;
+
+if_clock = read_clk
+
+driver_inc = read_driver_inc.sv inline
+monitor_inc = read_monitor_inc.sv inline
+
+-------------------------------------------------------------------------
+write_driver_inc.sv
+-------------------------------------------------------------------------
+static bit first = 1;
+
+task write_driver::do_drive();
+
+  if (first) begin
+    @(posedge vif.write_clk);
+    vif.rst <= 1;
+
+    repeat (5) @(posedge vif.write_clk);
+
+    vif.rst <= 0;
+
+    repeat (5) @(posedge vif.write_clk);
+
+    first = 0;
+  end
+
+  // Wait until reset finished
+  wait(!vif.rst);
+
+  // Drive transaction
+  vif.data_in <= req.data;
+
+  @(posedge vif.write_clk);
+  vif.wr_en <= 1;
+
+  `uvm_info("WRITE_DRV",
+  $sformatf("WRITE: data=%0d full=%0b", req.data, vif.full),
+  UVM_MEDIUM)
+
+  @(posedge vif.write_clk);
+  vif.wr_en <= 0;
+
+endtask
+
+-------------------------------------------------------------------------
+write_monitor_inc.sv
+-------------------------------------------------------------------------
+task write_monitor::do_mon();
+
+  forever begin
+    @(posedge vif.write_clk);
+
+    if (vif.wr_en && !vif.full) begin
+        m_trans.data = vif.data_in;
+
+        `uvm_info("WRITE_MON",
+           $sformatf("WRITE data = %0h", vif.data_in),
+           UVM_LOW)
+
+        analysis_port.write(m_trans);
+    end
+
+  end
+
+endtask
+
+-------------------------------------------------------------------------
+read_driver_inc.sv
+-------------------------------------------------------------------------
+task read_driver::do_drive();
+
+  @(posedge vif.read_clk);
+
+  if (!vif.empty) begin
+    vif.rd_en <= 1;
+    @(posedge vif.read_clk);
+    vif.rd_en <= 0;
+  end
+
+endtask
+
+-------------------------------------------------------------------------
+read_monitor_inc.sv
+-------------------------------------------------------------------------
+task read_monitor::do_mon();
+
+  forever begin
+    @(posedge vif.read_clk);
+
+    if (vif.rd_valid) begin
+
+      m_trans.data = vif.data_out;
+
+      `uvm_info("READ_MON",
+      $sformatf("READ DATA %0d empty=%0b", vif.data_out, vif.empty),
+      UVM_MEDIUM)
+
+      analysis_port.write(m_trans);
+
+    end
+
+  end
+
+endtask
+
+-------------------------------------------------------------------------
+top_env_inc_inside_class.sv
+-------------------------------------------------------------------------
+`include "fifo_scoreboard.sv"
+
+fifo_scoreboard scb;
+
+-------------------------------------------------------------------------
+top_env_build_phase_inc.sv
+-------------------------------------------------------------------------
+`uvm_info("DEBUG","Scoreboard build_phase executing",UVM_LOW)
+scb = fifo_scoreboard::type_id::create("scb", this);
+
+-------------------------------------------------------------------------
+top_env_connect_phase_inc.sv
+-------------------------------------------------------------------------
+`uvm_info("DEBUG","Scoreboard connect_phase executing",UVM_LOW)
+m_write_agent.m_monitor.analysis_port.connect(scb.write_imp);
+m_read_agent.m_monitor.analysis_port.connect(scb.read_imp);
+
+-------------------------------------------------------------------------
+fifo_scoreboard.sv
+-------------------------------------------------------------------------
+`uvm_analysis_imp_decl(_write)
+`uvm_analysis_imp_decl(_read)
+
+class fifo_scoreboard extends uvm_component;
+
+  `uvm_component_utils(fifo_scoreboard)
+
+  // Analysis ports
+  uvm_analysis_imp_write #(write_trans, fifo_scoreboard) write_imp;
+  uvm_analysis_imp_read  #(read_trans , fifo_scoreboard) read_imp;
+
+  // Reference FIFO model
+  bit [7:0] expected_q[$];
+
+  // Statistics counters
+  int total_writes;
+  int total_reads;
+
+  int pass_count;
+  int fail_count;
+
+  // Constructor
+  function new(string name, uvm_component parent);
+    super.new(name,parent);
+
+    write_imp = new("write_imp", this);
+    read_imp  = new("read_imp" , this);
+  endfunction
+
+
+  // WRITE side analysis
+  function void write_write(write_trans t);
+
+    expected_q.push_back(t.data);
+    total_writes++;
+
+    `uvm_info("SCB",
+      $sformatf("WRITE PUSH %0d  qsize=%0d",
+      t.data, expected_q.size()),
+      UVM_LOW)
+
+  endfunction
+
+
+  // READ side analysis
+  function void write_read(read_trans t);
+
+    bit [7:0] exp;
+
+    total_reads++;
+
+    if(expected_q.size()==0) begin
+      `uvm_error("SCB","READ when queue empty")
+      fail_count++;
+      return;
+    end
+
+    exp = expected_q.pop_front();
+
+    `uvm_info("SCB",
+      $sformatf("COMPARE exp=%0d got=%0d",
+      exp, t.data),
+      UVM_LOW)
+
+    if(exp != t.data) begin
+        `uvm_error("SCB","FIFO mismatch")
+        fail_count++;
+    end
+    else begin
+        pass_count++;
+    end
+
+  endfunction
+
+
+  // Final report
+  function void report_phase(uvm_phase phase);
+
+    int total;
+    real accuracy;
+
+    total = pass_count + fail_count;
+
+    if(total > 0)
+      accuracy = (pass_count * 100.0) / total;
+    else
+      accuracy = 0;
+
+    `uvm_info("SCB_SUMMARY",
+              $sformatf("
+---------------- FIFO SCOREBOARD SUMMARY ----------------
+Total Writes : %0d \nTotal Reads  : %0d\n
+Read Pass    : %0d \nRead Fail    : %0d
+Total Pass   : %0d \nTotal Fail   : %0d
+Accuracy     : %0.2f %%
+---------------------------------------------------------",
+      total_writes,
+      total_reads,
+      pass_count,
+      fail_count,
+      pass_count,
+      fail_count,
+      accuracy),
+      UVM_NONE)
+
+  endfunction
+
+endclass

@@ -1,0 +1,140 @@
+<certe_dump>
+  <instance type=" top_test "> 
+     uvm_test_top 
+  
+     <instance type=" top_env "> 
+        m_env 
+  
+        <instance type=" read_agent "> 
+           m_read_agent 
+  
+           <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+              analysis_port 
+              <connection>  uvm_test_top.m_env.m_read_coverage.analysis_imp  </connection> 
+           </port> 
+  
+           <instance type=" read_driver "> 
+              m_driver 
+  
+              <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+                 rsp_port 
+              </port> 
+  
+              <port if_type = "uvm_seq_item_pull_port" txn_type = "anonymous"> 
+                 seq_item_port 
+                 <connection>  uvm_test_top.m_env.m_read_agent.m_sequencer.seq_item_export  </connection> 
+              </port> 
+           </instance> 
+  
+  
+           <instance type=" read_monitor "> 
+              m_monitor 
+  
+              <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+                 analysis_port 
+                 <connection>  uvm_test_top.m_env.m_read_agent.analysis_port  </connection> 
+                 <connection>  uvm_test_top.m_env.scb.read_imp  </connection> 
+              </port> 
+           </instance> 
+  
+  
+           <instance type=" uvm_sequencer "> 
+              m_sequencer 
+  
+              <export if_type = "uvm_analysis_export" txn_type = "anonymous"> 
+                 rsp_export 
+                 <connection>  uvm_test_top.m_env.m_read_agent.m_sequencer.sqr_rsp_analysis_fifo.analysis_export  </connection> 
+              </export> 
+  
+              <imp if_type = "uvm_seq_item_pull_imp" txn_type = "anonymous"> 
+                 seq_item_export 
+              </imp> 
+           </instance> 
+  
+        </instance> 
+  
+  
+        <instance type=" read_coverage "> 
+           m_read_coverage 
+  
+           <imp if_type = "uvm_analysis_imp" txn_type = "anonymous"> 
+              analysis_imp 
+           </imp> 
+        </instance> 
+  
+  
+        <instance type=" write_agent "> 
+           m_write_agent 
+  
+           <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+              analysis_port 
+              <connection>  uvm_test_top.m_env.m_write_coverage.analysis_imp  </connection> 
+           </port> 
+  
+           <instance type=" write_driver "> 
+              m_driver 
+  
+              <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+                 rsp_port 
+              </port> 
+  
+              <port if_type = "uvm_seq_item_pull_port" txn_type = "anonymous"> 
+                 seq_item_port 
+                 <connection>  uvm_test_top.m_env.m_write_agent.m_sequencer.seq_item_export  </connection> 
+              </port> 
+           </instance> 
+  
+  
+           <instance type=" write_monitor "> 
+              m_monitor 
+  
+              <port if_type = "uvm_analysis_port" txn_type = "anonymous"> 
+                 analysis_port 
+                 <connection>  uvm_test_top.m_env.m_write_agent.analysis_port  </connection> 
+                 <connection>  uvm_test_top.m_env.scb.write_imp  </connection> 
+              </port> 
+           </instance> 
+  
+  
+           <instance type=" uvm_sequencer "> 
+              m_sequencer 
+  
+              <export if_type = "uvm_analysis_export" txn_type = "anonymous"> 
+                 rsp_export 
+                 <connection>  uvm_test_top.m_env.m_write_agent.m_sequencer.sqr_rsp_analysis_fifo.analysis_export  </connection> 
+              </export> 
+  
+              <imp if_type = "uvm_seq_item_pull_imp" txn_type = "anonymous"> 
+                 seq_item_export 
+              </imp> 
+           </instance> 
+  
+        </instance> 
+  
+  
+        <instance type=" write_coverage "> 
+           m_write_coverage 
+  
+           <imp if_type = "uvm_analysis_imp" txn_type = "anonymous"> 
+              analysis_imp 
+           </imp> 
+        </instance> 
+  
+  
+        <instance type=" fifo_scoreboard "> 
+           scb 
+  
+           <imp if_type = "uvm_analysis_imp_read" txn_type = "anonymous"> 
+              read_imp 
+           </imp> 
+  
+           <imp if_type = "uvm_analysis_imp_write" txn_type = "anonymous"> 
+              write_imp 
+           </imp> 
+        </instance> 
+  
+     </instance> 
+  
+  </instance> 
+  
+  </certe_dump>

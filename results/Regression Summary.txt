@@ -1,0 +1,15 @@
+# ---------------- FIFO SCOREBOARD SUMMARY ----------------
+# 
+# Total Writes : 900 
+# Total Reads  : 897
+# 
+# 
+# Read Pass    : 897 
+# Read Fail    : 0
+# 
+# Total Pass   : 897 
+# Total Fail   : 0
+# 
+# Accuracy     : 100.00 %
+# 
+# ---------------------------------------------------------
