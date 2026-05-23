@@ -4,6 +4,7 @@
 build/
 temp/
 uvm/work/
+uvm/generated_tb/dut/
 uvm/ACCELLERA_OVL_VHDL_LIB/
 uvm/.bash_logout
 uvm/.bash_profile
